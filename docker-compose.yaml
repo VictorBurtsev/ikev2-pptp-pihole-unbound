@@ -1,0 +1,70 @@
+version: '3.4'
+
+services:
+  ikev2-vpn:
+    image: vlburtsev/ikev2-vpn-server-alpine:3.15
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 500:500/udp
+      - 4500:4500/udp
+    volumes:
+      - type: bind
+        source: /etc/ipsec.secrets
+        target: /etc/ipsec.secrets
+        read_only: true
+      - type: bind
+        source: ikev2-vpn/etc/strongswan.conf
+        target: /etc/strongswan.conf
+        read_only: true
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+        reservations:
+          memory: 16M
+
+  pihole:
+    image: pihole/pihole
+    restart: unless-stopped
+    ports:
+      - 172.21.0.1:80:80/tcp
+      - 172.21.0.1:53:53/tcp
+      - 172.21.0.1:53:53/udp
+    environment:
+      - TZ=America/New_York
+      - WEBPASSWORD=qazwsxedc123
+      - PIHOLE_DNS_=unbound
+      - DNSSEC="true"
+      - INTERFACE=eth0
+      - DNSMASQ_LISTENING=single
+    volumes:
+      - pihole:/etc/pihole
+      - dnsmasq:/etc/dnsmasq.d
+      - type: bind
+        source: pihole/99-edns.conf
+        target: /etc/dnsmasq.d/99-edns.conf
+        read_only: true
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+        reservations:
+          memory: 16M
+
+  unbound:
+    image: klutchell/unbound
+    restart: unless-stopped
+    volumes:
+      - $PWD/:/opt/unbound/etc/unbound
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+        reservations:
+          memory: 16M
+
+volumes:
+    pihole:
+    dnsmasq:
