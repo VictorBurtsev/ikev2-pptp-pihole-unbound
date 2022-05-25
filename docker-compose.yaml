@@ -54,10 +54,8 @@ services:
           memory: 16M
 
   unbound:
-    image: klutchell/unbound
+    image: klutchell/unbound:latest
     restart: unless-stopped
-    volumes:
-      - $PWD/:/opt/unbound/etc/unbound
     deploy:
       resources:
         limits:
