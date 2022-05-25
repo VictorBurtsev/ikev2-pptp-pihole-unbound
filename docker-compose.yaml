@@ -29,9 +29,9 @@ services:
     image: pihole/pihole
     restart: unless-stopped
     ports:
-      - 172.21.0.1:80:80/tcp
-      - 172.21.0.1:53:53/tcp
-      - 172.21.0.1:53:53/udp
+      - 172.29.0.1:80:80/tcp
+      - 172.29.0.1:53:53/tcp
+      - 172.29.0.1:53:53/udp
     environment:
       - TZ=America/New_York
       - WEBPASSWORD=qazwsxedc123
@@ -54,7 +54,7 @@ services:
           memory: 16M
 
   unbound:
-    image: klutchell/unbound:latest
+    image: vlburtsev/unbound-alpine:3.16
     restart: unless-stopped
     deploy:
       resources:
@@ -66,3 +66,11 @@ services:
 volumes:
     pihole:
     dnsmasq:
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.29.0.0/24
+        gateway: 172.29.0.1
