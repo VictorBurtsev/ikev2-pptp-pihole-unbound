@@ -26,12 +26,12 @@ services:
           memory: 16M
 
   pihole:
-    image: pihole/pihole
+    image: pihole/pihole:latest
     restart: unless-stopped
     ports:
       - 172.29.0.1:80:80/tcp
-      - 172.29.0.1:53:53/tcp
-      - 172.29.0.1:53:53/udp
+      - 53:53/tcp
+      - 53:53/udp
     environment:
       - TZ=America/New_York
       - WEBPASSWORD=qazwsxedc123
