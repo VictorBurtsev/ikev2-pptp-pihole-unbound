@@ -39,6 +39,7 @@ services:
       - DNSSEC="true"
       - INTERFACE=eth0
       - DNSMASQ_LISTENING=single
+      - FTLCONF_RATE_LIMIT=100/300
     volumes:
       - pihole:/etc/pihole
       - dnsmasq:/etc/dnsmasq.d
@@ -49,9 +50,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 64M
+          memory: 128M
         reservations:
-          memory: 16M
+          memory: 32M
 
   unbound:
     image: vlburtsev/unbound-alpine:3.16
