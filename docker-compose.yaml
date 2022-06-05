@@ -21,25 +21,28 @@ services:
     deploy:
       resources:
         limits:
-          memory: 64M
+          memory: 32M
         reservations:
-          memory: 16M
+          memory: 8M
 
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
+    shm_size: 256M
     ports:
       - 172.29.0.1:80:80/tcp
       - 53:53/tcp
       - 53:53/udp
     environment:
-      - TZ=America/New_York
+      - TZ=Europe/Amsterdam
       - WEBPASSWORD=qazwsxedc123
       - PIHOLE_DNS_=unbound
       - DNSSEC="true"
       - INTERFACE=eth0
       - DNSMASQ_LISTENING=single
-      - FTLCONF_RATE_LIMIT=100/300
+      - QUERY_LOGGING="false"
+      - FTLCONF_RATE_LIMIT=36000/3600
+      - FTLCONF_LOGFILE=/dev/null
     volumes:
       - pihole:/etc/pihole
       - dnsmasq:/etc/dnsmasq.d
@@ -50,7 +53,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 128M
+          memory: 384M
         reservations:
           memory: 32M
 
@@ -60,9 +63,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 64M
+          memory: 32M
         reservations:
-          memory: 16M
+          memory: 8M
 
 volumes:
     pihole:
