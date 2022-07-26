@@ -28,7 +28,7 @@ services:
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
-    shm_size: 256M
+    shm_size: 128M
     ports:
       - 172.29.0.1:80:80/tcp
       - 53:53/tcp
@@ -41,8 +41,9 @@ services:
       - INTERFACE=eth0
       - DNSMASQ_LISTENING=single
       - QUERY_LOGGING="false"
-      - FTLCONF_RATE_LIMIT=36000/3600
+      - FTLCONF_RATE_LIMIT=600/60
       - FTLCONF_LOGFILE=/dev/null
+      - FTLCONF_PRIVACYLEVEL=0
     volumes:
       - pihole:/etc/pihole
       - dnsmasq:/etc/dnsmasq.d
