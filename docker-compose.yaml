@@ -25,6 +25,33 @@ services:
         reservations:
           memory: 8M
 
+  pptpd-vpn:
+    image: vlburtsev/pptp-vpn-server-alpine:3.16
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/ppp:/dev/ppp
+    sysctls:
+      - net.ipv4.ip_forward=1
+    ports:
+      - 1723:1723
+    volumes:
+      - type: bind
+        source: pptpd/chap-secrets
+        target: /etc/ppp/chap-secrets
+        read_only: true
+      - type: bind
+        source: pptpd/pptpd-options
+        target: /etc/ppp/pptpd-options
+        read_only: true
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 8M
+
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
