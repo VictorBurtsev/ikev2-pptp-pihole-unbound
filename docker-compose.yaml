@@ -126,6 +126,8 @@ services:
           --loglevel=none \
           --limits.openfiles=8192 \
           --limits.transittunnels=5000
+    volumes:
+      - i2pd:/home/i2pd/data
     deploy:
       resources:
         limits:
@@ -136,6 +138,8 @@ services:
   xd-torrent-client:
     image: vlburtsev/xd-torrent-client:3.16
     restart: always
+    volumes:
+      - xd-torrent-client:/home/xd/data
     deploy:
       resources:
         limits:
@@ -146,6 +150,8 @@ services:
 volumes:
     pihole:
     dnsmasq:
+    xd-torrent-client:
+    i2pd:
 
 networks:
   default:
