@@ -11,10 +11,6 @@ services:
       - 4500:4500/udp
     volumes:
       - type: bind
-        source: /etc/ipsec.secrets
-        target: /etc/ipsec.secrets
-        read_only: true
-      - type: bind
         source: ikev2-vpn/etc/strongswan.conf
         target: /etc/strongswan.conf
         read_only: true
