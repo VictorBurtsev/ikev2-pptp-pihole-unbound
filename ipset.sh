@@ -37,4 +37,4 @@ ipset save > /etc/ipset.rules
 iptables -I DOCKER-USER -m set --match-set geoblock-br src -j DROP
 iptables -A INPUT -m set --match-set geoblock-br src -j DROP
 
-watch 'iptables -L -v | grep 'geoblock-br'
+watch "iptables -L -v | grep 'geoblock-br'"

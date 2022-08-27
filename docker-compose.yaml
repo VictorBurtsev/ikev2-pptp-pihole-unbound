@@ -55,7 +55,6 @@ services:
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
-    shm_size: 128M
     ports:
       - 172.29.0.1:80:80/tcp
       - 53:53/tcp
@@ -81,7 +80,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 384M
+          memory: 256M
         reservations:
           memory: 32M
 
@@ -94,6 +93,55 @@ services:
           memory: 32M
         reservations:
           memory: 8M
+
+  i2p:
+    image: purplei2p/i2pd:latest
+    restart: always
+    ports:
+      - 172.29.0.1:4444:4444
+      - 172.29.0.1:4447:4447
+      - 172.29.0.1:7656:7656
+      - 172.29.0.1:7070:7070
+      - 12345:12345
+      - 12345:12345/udp
+      - 54321:54321/udp
+    environment:
+      - DEFAULT_ARGS= \
+          --datadir=/home/i2pd/data \
+          --reseed.verify=true \
+          --upnp.enabled=false \
+          --http.enabled=true \
+          --http.strictheaders=false \
+          --http.address=0.0.0.0 \
+          --httpproxy.enabled=true \
+          --httpproxy.address=0.0.0.0 \
+          --socksproxy.enabled=true \
+          --socksproxy.address=0.0.0.0 \
+          --sam.enabled=true \
+          --sam.address=0.0.0.0 \
+          --ntcp2.port=12345 \
+          --port=54321
+          --floodfill \
+          --bandwidth=X \
+          --loglevel=none \
+          --limits.openfiles=8192 \
+          --limits.transittunnels=5000
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 32M
+
+  xd-torrent-client:
+    image: vlburtsev/xd-torrent-client:3.16
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 32M
 
 volumes:
     pihole:
