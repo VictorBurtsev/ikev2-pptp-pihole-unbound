@@ -131,7 +131,7 @@ services:
           memory: 32M
 
   xd-torrent-client:
-    image: vlburtsev/xd-torrent-client:3.16
+    image: vlburtsev/xd-torrent-client-alpine:3.16
     restart: always
     volumes:
       - xd-torrent-client:/home/xd/data
