@@ -11500,5 +11500,3 @@ ipset save > /etc/ipset.rules
 
 iptables -I DOCKER-USER -m set --match-set myset-ip src -j DROP
 iptables -A INPUT -m set --match-set myset-ip src -j DROP
-
-watch "iptables -L -v | grep 'myset-ip'"
