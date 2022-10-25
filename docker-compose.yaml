@@ -51,6 +51,7 @@ services:
   pihole:
     image: vlburtsev/pihole-alpine:3.16
     restart: unless-stopped
+    shm_size: 128M
     ports:
       - 172.29.0.1:80:80/tcp
       - 53:53/tcp
