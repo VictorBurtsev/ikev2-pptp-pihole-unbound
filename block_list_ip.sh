@@ -5258,7 +5258,6 @@ ipset add myset-ip 170.84.39.86
 ipset add myset-ip 170.84.39.88
 ipset add myset-ip 170.84.39.9
 ipset add myset-ip 170.84.39.90
-ipset add myset-ip 172.29.0.1
 ipset add myset-ip 177.10.172.100
 ipset add myset-ip 177.10.172.102
 ipset add myset-ip 177.10.172.104
