@@ -280,6 +280,7 @@ ipset add myset-ip 131.100.23.247
 ipset add myset-ip 131.100.23.43
 ipset add myset-ip 131.100.23.92
 ipset add myset-ip 131.100.23.96
+ipset add myset-ip 131.221.47.249
 ipset add myset-ip 131.255.116.100
 ipset add myset-ip 131.255.116.102
 ipset add myset-ip 131.255.116.104
@@ -24346,6 +24347,7 @@ ipset add myset-ip 64.224.19.94
 ipset add myset-ip 64.224.19.95
 ipset add myset-ip 64.224.19.96
 ipset add myset-ip 64.227.176.157
+ipset add myset-ip 82.66.131.243
 
 ipset save > /etc/ipset.rules
 
