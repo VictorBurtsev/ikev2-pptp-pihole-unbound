@@ -18332,6 +18332,7 @@ ipset add myset-ip 24.152.27.93
 ipset add myset-ip 24.152.27.94
 ipset add myset-ip 24.152.27.95
 ipset add myset-ip 24.152.27.96
+ipset add myset-ip 45.142.192.11
 ipset add myset-ip 45.148.10.81
 ipset add myset-ip 45.160.104.100
 ipset add myset-ip 45.160.104.102
