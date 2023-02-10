@@ -121,7 +121,7 @@ services:
           --bandwidth=X \
           --loglevel=none \
           --limits.openfiles=8192 \
-          --limits.transittunnels=5000
+          --limits.transittunnels=10000
     volumes:
       - i2pd:/home/i2pd/data
     deploy:
