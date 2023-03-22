@@ -144,6 +144,21 @@ services:
         reservations:
           memory: 32M
 
+  wireguard:
+    image: vlburtsev/wireguard-alpine:3.17
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - 51820:51820/udp
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 8M
+
 volumes:
     pihole:
     dnsmasq:
