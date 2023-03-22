@@ -54,8 +54,8 @@ services:
     shm_size: 256M
     ports:
       - 172.29.0.1:80:80/tcp
-      - 53:53/tcp
-      - 53:53/udp
+      - 172.29.0.1:53:53/tcp
+      - 172.29.0.1:53:53/udp
     environment:
       - TZ=Europe/Amsterdam
       - WEBPASSWORD=qazwsxedc123
@@ -67,7 +67,7 @@ services:
       - FTLCONF_RATE_LIMIT=600/60
       - FTLCONF_PRIVACYLEVEL=0
       - FTLCONF_DBIMPORT=no
-      - FTLCONF_DEBUG_ALL=true
+      - FTLCONF_DEBUG_ALL=false
     volumes:
       - pihole:/etc/pihole
       - dnsmasq:/etc/dnsmasq.d
