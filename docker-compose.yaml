@@ -152,6 +152,11 @@ services:
       - SYS_MODULE
     ports:
       - 51820:51820/udp
+    volumes:
+      - type: bind
+        source: wireguard/wg0.conf
+        target: /etc/wireguard/wg0.conf
+        read_only: true
     deploy:
       resources:
         limits:
