@@ -17,9 +17,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 16M
         reservations:
-          memory: 8M
+          memory: 4M
 
   pptpd-vpn:
     image: vlburtsev/pptp-vpn-server-alpine:3.16
@@ -44,14 +44,14 @@ services:
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 16M
         reservations:
-          memory: 8M
+          memory: 4M
 
   pihole:
-    image: pihole/pihole:2023.02.0
+    image: pihole/pihole:latest
     restart: unless-stopped
-    shm_size: 256M
+    shm_size: 128M
     ports:
       - 172.29.0.1:80:80/tcp
       - 172.29.0.1:53:53/tcp
@@ -78,7 +78,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 128M
         reservations:
           memory: 32M
 
@@ -88,12 +88,12 @@ services:
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 16M
         reservations:
-          memory: 8M
+          memory: 4M
 
   i2pd:
-    image: purplei2p/i2pd:release-2.45.1
+    image: purplei2p/i2pd:latest
     restart: always
     ports:
       - 172.29.0.1:4444:4444
@@ -122,7 +122,7 @@ services:
           --bandwidth=X \
           --loglevel=none \
           --limits.openfiles=8192 \
-          --limits.transittunnels=10000
+          --limits.transittunnels=5000
     volumes:
       - i2pd:/home/i2pd/data
     deploy:
@@ -140,7 +140,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 128M
         reservations:
           memory: 32M
 
@@ -160,9 +160,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 16M
         reservations:
-          memory: 8M
+          memory: 4M
 
 volumes:
     pihole:
