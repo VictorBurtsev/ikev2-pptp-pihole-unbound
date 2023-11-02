@@ -187,6 +187,23 @@ services:
         reservations:
           memory: 8M
 
+  xray:
+    image: teddysun/xray:latest
+    restart: always
+    ports:
+      - 56789:56789/tcp
+    volumes:
+      - type: bind
+        source: xray/config.json
+        target: /etc/xray/config.json
+        read_only: true
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 8M
+
 volumes:
     pihole:
     dnsmasq:
