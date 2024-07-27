@@ -1,52 +1,52 @@
 version: '3.4'
 
 services:
-  ikev2-vpn:
-    image: vlburtsev/ikev2-vpn-server-alpine:3.17
-    restart: always
-    cap_add:
-      - NET_ADMIN
-    ports:
-      - 500:500/udp
-      - 4500:4500/udp
-    volumes:
-      - type: bind
-        source: ikev2-vpn/etc/strongswan.conf
-        target: /etc/strongswan.conf
-        read_only: true
-    deploy:
-      resources:
-        limits:
-          memory: 16M
-        reservations:
-          memory: 4M
+  #  ikev2-vpn:
+  #    image: vlburtsev/ikev2-vpn-server-alpine:3.17
+  #    restart: always
+  #    cap_add:
+  #      - NET_ADMIN
+  #    ports:
+  #      - 500:500/udp
+  #      - 4500:4500/udp
+  #    volumes:
+  #      - type: bind
+  #        source: ikev2-vpn/etc/strongswan.conf
+  #        target: /etc/strongswan.conf
+  #        read_only: true
+  #    deploy:
+  #      resources:
+  #        limits:
+  #          memory: 16M
+  #        reservations:
+  #          memory: 4M
 
-  pptpd-vpn:
-    image: vlburtsev/pptp-vpn-server-alpine:3.16
-    restart: always
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/ppp:/dev/ppp
-    sysctls:
-      - net.ipv4.ip_forward=1
-    ports:
-      - 1723:1723
-    volumes:
-      - type: bind
-        source: pptpd/chap-secrets
-        target: /etc/ppp/chap-secrets
-        read_only: true
-      - type: bind
-        source: pptpd/pptpd-options
-        target: /etc/ppp/pptpd-options
-        read_only: true
-    deploy:
-      resources:
-        limits:
-          memory: 16M
-        reservations:
-          memory: 4M
+  #  pptpd-vpn:
+  #    image: vlburtsev/pptp-vpn-server-alpine:3.16
+  #    restart: always
+  #    cap_add:
+  #      - NET_ADMIN
+  #    devices:
+  #      - /dev/ppp:/dev/ppp
+  #    sysctls:
+  #      - net.ipv4.ip_forward=1
+  #    ports:
+  #      - 1723:1723
+  #    volumes:
+  #      - type: bind
+  #        source: pptpd/chap-secrets
+  #        target: /etc/ppp/chap-secrets
+  #        read_only: true
+  #      - type: bind
+  #        source: pptpd/pptpd-options
+  #        target: /etc/ppp/pptpd-options
+  #        read_only: true
+  #    deploy:
+  #      resources:
+  #        limits:
+  #          memory: 16M
+  #        reservations:
+  #          memory: 4M
 
   pihole:
     image: pihole/pihole:latest
@@ -88,9 +88,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 16M
+          memory: 32M
         reservations:
-          memory: 4M
+          memory: 8M
 
   i2pd:
     image: purplei2p/i2pd:latest
@@ -132,17 +132,17 @@ services:
         reservations:
           memory: 32M
 
-  xd-torrent-client:
-    image: vlburtsev/xd-torrent-client-alpine:3.16
-    restart: always
-    volumes:
-      - xd-torrent-client:/home/xd/data
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-        reservations:
-          memory: 32M
+            #  xd-torrent-client:
+            #    image: vlburtsev/xd-torrent-client-alpine:3.16
+            #    restart: always
+            #    volumes:
+            #      - xd-torrent-client:/home/xd/data
+            #    deploy:
+            #      resources:
+            #        limits:
+            #          memory: 128M
+            #        reservations:
+            #          memory: 32M
 
   wireguard:
     image: vlburtsev/wireguard-alpine:3.17
@@ -165,7 +165,7 @@ services:
           memory: 4M
 
   element-web:
-    image: vlburtsev/element-web:release-1.11.39
+    image: vectorim/element-web
     restart: unless-stopped
     ports:
       - 80:80/tcp
@@ -187,20 +187,35 @@ services:
         reservations:
           memory: 8M
 
-  xray:
-    image: teddysun/xray:latest
+            #  xray:
+            #    image: teddysun/xray:latest
+            #    restart: always
+            #    ports:
+            #      - 56789:56789/tcp
+            #    volumes:
+            #      - type: bind
+            #        source: xray/config.json
+            #        target: /etc/xray/config.json
+            #        read_only: true
+            #    deploy:
+            #      resources:
+            #        limits:
+            #          memory: 32M
+            #        reservations:
+            #          memory: 8M
+
+  shadowsocks:
+    image: shadowsocks/shadowsocks-libev
     restart: always
     ports:
-      - 56789:56789/tcp
-    volumes:
-      - type: bind
-        source: xray/config.json
-        target: /etc/xray/config.json
-        read_only: true
+      - "8388:8388"
+    environment:
+      - METHOD=aes-256-gcm
+      - PASSWORD=shadowsocks_2024
     deploy:
       resources:
         limits:
-          memory: 32M
+          memory: 64M
         reservations:
           memory: 8M
 
